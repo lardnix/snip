@@ -2,7 +2,10 @@ import 'dotenv/config'
 
 import Fastify from 'fastify'
 
-const app = Fastify({ logger: true })
+const isDev = process.env.NODE_ENV == "development"
+const app = Fastify({
+    logger: isDev ? { transport: { target: 'pino-pretty' } }: true,
+})
 
 app.get('/health', async () => {
     return { status: 'ok' }
